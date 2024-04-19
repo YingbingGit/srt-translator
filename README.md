@@ -1,4 +1,1 @@
-# srt-translator
-# srt-translator
-# srt-translator
-# srt-translator
+# Subtitle translator.
