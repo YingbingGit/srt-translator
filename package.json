@@ -1,0 +1,26 @@
+{
+  "name": "my-translator",
+  "type": "module",
+  "keywords": [
+    "translate",
+    "translator",
+    "google",
+    "translate",
+    "api",
+    "free",
+    "language"
+  ],
+  "dependencies": {
+    "@translate-tools/core": "^1.0.0"
+  },
+  "devDependencies": {
+    "ava": "^0.15.2",
+    "codecov": "^1.0.1",
+    "coveralls": "^2.11.11",
+    "nyc": "^7.1.0",
+    "xo": "^0.16.0"
+  },
+  "xo": {
+    "space": 2
+  }
+}
