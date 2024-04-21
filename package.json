@@ -11,7 +11,8 @@
     "language"
   ],
   "dependencies": {
-    "@translate-tools/core": "^1.0.0"
+    "@translate-tools/core": "^1.0.0",
+    "commander": "^12.0.0"
   },
   "devDependencies": {
     "ava": "^0.15.2",

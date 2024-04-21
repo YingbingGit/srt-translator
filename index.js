@@ -1,5 +1,6 @@
 import { GoogleTranslator } from "@translate-tools/core/translators/GoogleTranslator/index.js";
 import { readFileSync, writeFileSync } from "fs";
+import { program } from "commander";
 
 const translator = new GoogleTranslator();
 const SUBTITLE_REG =
@@ -40,32 +41,35 @@ async function translate(srtFileName, chineseEnglishTogether) {
       subtitles[index].timeline +
       content +
       (chineseEnglishTogether ? subtitles[index].content : "")
-    )w;
+    );
   });
   return translatedSubtitles;
 }
 
-function main() {
+async function main(args) {
   console.log(`
   #######################################################
   #                                                     #
   # Begin translation:                                  #
   #                                                     #
   #######################################################`);
-  const args = process.argv;
-  if (args.length <= 2) {
-    console.log("Please enter the subtittle file name.");
-  }
-  const subtittleFile = args[2];
-  translate(args[2], true).then((lines) => {
-    writeFileSync(
-      subtittleFile.replace(/\.srt$/, ".zh.srt"),
-      lines.join("\n"),
-      "utf8"
-    );
-  });
+  program
+    .version("0.0.1")
+    .requiredOption("-i, --input <file>", "The input file name.")
+    .option("-o, --output <file>", "The output file name.")
+    .option("-m, --mixed [mixed]", "Whether to mix Chinese and English", false);
+
+  program.parse(process.argv);
+  const opts = program.opts();
+  console.log(opts.output || opts.input.replace(/\.\w+$/, ".zh.srt"));
+
+  const lines = await translate(opts.input, opts.mixed);
+  writeFileSync(
+    opts.output || opts.input.replace(/\.\w+$/, ".zh.srt"),
+    lines.join("\n"),
+    "utf8"
+  );
 }
 
-
 /** node index.js /path/to/xxx.srt */
-main();
+main(process.argv);
